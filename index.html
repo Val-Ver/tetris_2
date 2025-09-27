@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Tetris</title>
+  <link rel="stylesheet" href="tetris_style.css">
+</head>
+
+<body>
+  <div class="game-conteiner">
+    <div class="tetris-conteiner">
+      <div class="canvas-conteiner">
+        <canvas id="GameBoard" width="300" height="600"></canvas>
+      </div>
+      <div class="score-conteiner">
+        <div id="tetrisScore" class="scoreBoard">
+          <h1>TETRIS</h1>
+          <p>Best Score: <span class="scoreAll"></span></p>
+          <p>Score: <span class="score"></span></p>
+          <p>Level: <span class="level"></span></p>
+          <p>Speed: <span class="speed"></span></p>
+          <p class="next">Next Figure: </p>
+        </div>
+        <div class="canvas-conteiner-next">
+          <canvas id="BoardNextFigure" width="125" height="125"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="empty"></div>
+
+    <div class="tetris-button-left">
+      <div class="move-button">
+        <button id="upButton" class="game-button" data-value="ArrowDownSpeed">drop</button>
+        <button id="leftButton" class="game-button" data-value="ArrowLeft">left</button>
+        <button id="rightButton" class="game-button" data-value="ArrowRight">right</button>
+        <button id="downButton" class="game-button" data-value="ArrowDown">down</button>
+       <div class="strelochki">
+          <div id="up">▽</div>
+          <div id="left">▷</div>
+          <div id="right">◁</div>
+          <div id="down">△</div>
+        </div>
+      </div>
+  </div>
+    <div class="tetris-button-right">
+      <div class="rotate-button-div">
+        <button id="rotateButton" class="game-button" data-value="ArrowUp">rotate</button>
+      </div>
+      <div class="option-button">
+        <div class="name-button">
+          <button id="pauseButton" class="small-button"></button>
+          <span class="pause">pause</span>
+        </div>
+        <div class="name-button">
+          <button id="startButton" class="small-button"></button>
+          <span class="start">play</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <script src="tetris_Game_class.js"></script>
+  <script src="tetris_Board_class.js"></script>
+  <script src="tetris_Draw_class.js"></script>
+  <script src="tetris_Score_class.js"></script>
+</body>
+</html>

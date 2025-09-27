@@ -1,0 +1,522 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.game-conteiner {
+  height: 100%;
+  max-height: 650px;
+  display: grid;
+  justify-items: center;
+  align-items: start;
+  grid-template-columns: repeat(2, auto);
+/*  grid-template-rows: repeat(3, auto);*/
+  grid-template-rows: auto 10px auto;
+  grid-gap: 0;
+}
+
+@media (pointer: none), (pointer: coarse) {
+  .game-conteiner {
+    width: 100%;
+    max-height: 100%;
+    padding: 1%;
+    border: 5px solid #8f8f8f;
+    background-color: #dee4e7;
+    box-shadow: inset 3px 3px 5px rgba(255,255,255,0.5);
+  }
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: portrait) {
+  .game-conteiner {
+    padding-top: 3%;
+    grid-template-columns: 55% 45%;
+    grid-template-rows: 60% 10% 30%;
+  }
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: landscape) {
+  .game-conteiner {
+    grid-template-columns: 30% auto 30%;
+    grid-template-rows: repeat(1, auto);
+    justify-items: center;
+    align-items: center;
+  }
+}
+
+.tetris-conteiner {
+  grid-column: 1/3;
+  grid-row: 1;
+  display: flex;
+  justify-content: space-around;
+  height: 100%;
+  aspect-ratio: 4/5;
+  max-height: 640px;
+  box-sizing: border-box;
+  padding: 0.5%;
+  border: 1px solid black;
+  background-color: rgba(82,255,189,0.3);
+  text-shadow: 2px 2px 3px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 10px #dee4e7,
+        inset 2px 2px 5px rgba(0,0,0,0.5),
+        0 0 0 6px #12102d;
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: portrait) {
+  .tetris-conteiner {
+    max-height: 135vw;
+    width: 95%;
+  }
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: landscape) {
+  .tetris-conteiner {
+    max-height: 90dvh;
+    max-width: 95%;
+    grid-column: 2;
+  }
+}
+
+.blurred-element {
+  filter: blur(5px);
+}
+
+.canvas-conteiner {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+canvas {
+  display: block;
+  border: 1px solid black;
+  background-color: white;
+}
+
+#GameBoard {
+  aspect-ratio: 1/2;
+  height: 100%;
+}
+
+.empty {
+  grid-column: 1/3;
+  grid-row: 2;
+  height: 0;
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: portrait) {
+  .empty {
+    height: 100%;
+    width: 102%;
+    background: linear-gradient(to bottom, #dee4e7, #8f8f8f);
+    box-shadow: 0 5px 5px rgba(143,143,143,1);
+    margin-top: 2%;
+  }
+}
+@media (pointer: none), (pointer: coarse) and (orientation: landscape) {
+  .empty {
+    display: none;
+  }
+}
+
+.score-conteiner {
+  height: 100%;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.scoreBoard {
+  user-select: none;
+  cursor: default;
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: portrait) {
+  .scoreBoard {
+    font-size: 3vw;
+  }
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: landscape) {
+  .scoreBoard {
+    font-size: 3vh;
+  }
+}
+
+.next {
+  margin-top: 10%;
+}
+
+.canvas-conteiner-next {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: portrait) and (max-height: 600px) {
+  .canvas-conteiner-next {
+    max-width: 17vh;
+  }
+}
+@media (pointer: none), (pointer: coarse) and (orientation: landscape) {
+  .canvas-conteiner-next {
+/*    max-width: 17vw;*/
+  }
+}
+#BoardNextFigure {
+  width: 95%;
+  aspect-ratio: 1;
+}
+
+.game-over {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); /*посмотреть так ли пишется*/
+}
+
+#gameOverButton {
+  aspect-ratio: 3/1;
+}
+
+.tetris-button-left {
+  grid-column: 1;
+  grid-row: 3;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 5%;
+  display: flex;
+  align-items: center;;
+}
+
+@media (pointer: none), (pointer: coarse) {
+  .tetris-button-left {
+    margin-top: 5%;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: landscape) {
+  .tetris-button-left {
+    grid-row: 1;
+  }
+}
+
+.move-button {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+  gap: 1vh;
+}
+
+.strelochki {
+  display: none;
+}
+
+@media (pointer: none), (pointer: coarse) {
+  .move-button, .strelochki {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 0;
+  }
+}
+
+#upButton {
+  margin-right: 30%;
+}
+
+#downButton {
+  margin-left: 30%;
+}
+
+@media (pointer: none), (pointer: coarse) {
+  #upButton {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+  }
+
+  #leftButton {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  #rightButton {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  #downButton {
+    grid-column: 2;
+    grid-row: 3;
+    margin: 0;
+  }
+
+  .strelochki {
+    grid-column: 2;
+    grid-row: 2;
+    display: grid;
+    padding-bottom: 1%;
+    padding-top: 1%;
+  }
+
+  #up {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  #left {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  #right {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  #down {
+    grid-column: 2;
+    grid-row: 3;
+  }
+}
+@media (pointer: none), (pointer: coarse) and (orientation: portrait) and (max-height: 600px) {
+  .strelochki {
+    display: none;
+  }
+}
+.game-button {
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: portrait) {
+  .game-button {
+/*    width: 15vw;*/
+      width: 8vh;
+      font-size: 3vw;
+  }
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: portrait) and (max-width: 600px) {
+  .game-button {
+    max-width: 17vw;
+/*      width: 8vh;*/
+  }
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: landscape) {
+  .game-button {
+    width: 17vh;
+/*      width: 8vh;*/
+    max-width: 8vw;
+    font-size: 5vh;
+  }
+}
+
+.tetris-button-right {
+  grid-column: 2;
+  grid-row: 3;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 5%;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 50% 50%;
+}
+
+@media (pointer: none), (pointer: coarse) {
+  .tetris-button-right {
+    margin-top: 5%;
+    grid-template-rows: 30% 70%;
+  }
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: landscape) {
+  .tetris-button-right {
+    grid-column: 3;
+    grid-row: 1;
+    grid-template-columns: 100%;
+  }
+}
+
+.option-button {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: portrait) {
+  .option-button {
+    gap: 5%;
+    grid-row: 1;
+    grid-column: 2;
+  }
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: landscape) {
+  .option-button {
+    grid-row: 1;
+    gap: 5%;
+  }
+}
+
+.name-button {
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+   gap: 5px;
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: portrait) {
+  .name-button {
+    font-size: 3vw;
+  }
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: landscape) {
+  .name-button {
+    font-size: 5vh;
+  }
+}
+
+.small-button {
+  width: 40px;
+  aspect-ratio: 2/1;
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: portrait) {
+  .small-button {
+/*    width: 8vw;*/
+    width: 4vh;
+    aspect-ratio: 1;
+  }
+}
+@media (pointer: none), (pointer: coarse) and (orientation: portrait) and (max-width: 600px) {
+  .small-button {
+      max-width: 8vw;
+  }
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: landscape) {
+  .small-button {
+/*    width: 8vw;*/
+    width: 10vh;
+    aspect-ratio: 1;
+  }
+}
+.rotate-button-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: portrait) {
+    .rotate-button-div {
+        /*padding-top: 5vh;*/
+        grid-column: 1/3;
+        grid-row: 2;
+    }
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: landscape) {
+  .rotate-button-div {
+    grid-row: 2;
+  }
+}
+
+#rotateButton {
+    width: 60px;
+    height: 40px;
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: portrait) {
+    #rotateButton {
+        width: 15vh;
+/*        width: 30vw;*/
+        height: 100%;
+        aspect-ratio: 1;
+    }
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: portrait) and (max-width: 600px) {
+    #rotateButton {
+      max-width: 30vw;
+  }
+}
+
+@media (pointer: none), (pointer: coarse) and (orientation: landscape) {
+  #rotateButton {
+    width: 30vh;
+    height: 100%;
+/*      width: 8vh;*/
+/*    max-width: 17vw;*/
+    max-width: 100%;
+
+/*    font-size: 3vh;*/
+    aspect-ratio: 1;
+  }
+}
+
+button {
+    aspect-ratio: 1;
+    border: 2px solid black;
+    background: linear-gradient(to bottom, #0fcca6, #0a8f74);
+    border-radius: 5px;
+    box-shadow: inset 3px 3px 5px rgba(255,255,255,0.5);
+    cursor: pointer;
+    user-select: none;
+}
+
+button:hover {
+    color: rgba(255,255,255,1);
+    background: linear-gradient(to bottom, #00997a, #04624f);
+}
+
+button:active {
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,1);
+}
+
+@media (pointer: none), (pointer: coarse) {
+    button {
+      background: linear-gradient(to bottom, #f2c240, #967417);
+      box-shadow: 0 5px 10px #dee4e7,
+                  inset 3px 3px 5px rgba(255,255,255,0.5),
+                  0 0 0 2px #12102d,
+                  0 0 0 7px rgba(143,143,143,0.2);
+      border-radius: 50%;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:hover {
+      background: linear-gradient(to bottom, #f2c240, #967417);
+
+    }
+
+    button:active {
+      background: linear-gradient(to bottom, #f2c240, #967417);
+      box-shadow: inset 2px 2px 5px rgba(0,0,0,1);
+    }
+}
